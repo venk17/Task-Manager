@@ -10,12 +10,23 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-frontend-domain.vercel.app'] 
-    : ['http://localhost:3000', 'http://127.0.0.1:3000'],
-  credentials: true
-}));
+   const corsOptions = {
+     origin: (origin, callback) => {
+       if (process.env.NODE_ENV === 'production') {
+         const allowedOrigins = ['https://task-manager-neon-two.vercel.app'];
+         if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+           callback(null, true);
+         } else {
+           callback(new Error('Not allowed by CORS'));
+         }
+       } else {
+         callback(null, true); // Allow all origins in development
+       }
+     },
+     methods: 'GET,POST,PUT,DELETE',
+     credentials: true,
+   };
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
