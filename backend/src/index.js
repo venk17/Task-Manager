@@ -10,7 +10,6 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-<<<<<<< HEAD
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
     ? ['https://task-manager-neon-two.vercel.app']
@@ -21,25 +20,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-=======
-   const corsOptions = {
-     origin: (origin, callback) => {
-       if (process.env.NODE_ENV === 'production') {
-         const allowedOrigins = ['https://task-manager-neon-two.vercel.app'];
-         if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-           callback(null, true);
-         } else {
-           callback(new Error('Not allowed by CORS'));
-         }
-       } else {
-         callback(null, true); // Allow all origins in development
-       }
-     },
-     methods: 'GET,POST,PUT,DELETE',
-     credentials: true,
-   };
-app.use(cors(corsOptions));
->>>>>>> 40be4ea0c3cf3ebcef2b923ad349ad14c1c7358b
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
